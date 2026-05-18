@@ -120,6 +120,12 @@ pip install fastapi uvicorn apscheduler
 
 ## Dependencies
 
+This project uses `uv` for Python environment and dependency management.
+
+```bash
+uv sync
+```
+
 ```txt
 google-api-python-client
 youtube-transcript-api
@@ -132,6 +138,7 @@ fastapi
 uvicorn
 apscheduler
 python-dotenv
+python-telegram-bot
 ```
 
 ## Environment Variables
@@ -140,10 +147,29 @@ python-dotenv
 GOOGLE_API_KEY=your_youtube_data_api_key
 OPENAI_API_KEY=your_openai_key
 WEBHOOK_CALLBACK_URL=https://your-server.com/webhook
+TELEGRAM_BOT_TOKEN=123456:replace_me
+TELEGRAM_CHAT_ID=-1001234567890
 ```
 
 `OPENAI_API_KEY` is optional when using local `sentence-transformers`
 embeddings.
+
+## Usage
+
+Copy `.env.example` to `.env`, fill in the credentials you need, then run the
+pipeline through `uv`:
+
+```bash
+uv run youtube-knowledge ingest-video \
+  --video-id abc123 \
+  --title "Every JavaScript Framework Ever" \
+  --channel Fireship \
+  --genre tech
+```
+
+The ingestion pipeline fetches the transcript, chunks it with metadata, embeds
+the chunks, stores them in ChromaDB, summarizes the transcript, and sends the
+summary to Telegram when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set.
 
 ## Architecture Summary
 

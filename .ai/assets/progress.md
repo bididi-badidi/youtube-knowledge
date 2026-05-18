@@ -19,3 +19,5 @@ No upcoming tasks
 ## Phases
 
 - [x] Project description and tech stack documented: [README](../../README.md)
+- [x] UV-managed ingestion environment and pipeline scaffold complete:
+  [README](../../README.md)
