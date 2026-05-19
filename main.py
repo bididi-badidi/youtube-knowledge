@@ -1,5 +1,4 @@
-def main():
-    print("Hello from youtube-knowledge!")
+from youtube_knowledge.cli import main
 
 
 if __name__ == "__main__":
