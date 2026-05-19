@@ -1,0 +1,47 @@
+name: PR Branch Policy
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate-target-branch:
+    name: Validate target branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Enforce dev-to-main and feature-to-dev flow
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          echo "Validating pull request from '${HEAD_BRANCH}' into '${BASE_BRANCH}'."
+
+          if [ "${BASE_BRANCH}" = "main" ] && [ "${HEAD_BRANCH}" != "dev" ]; then
+            echo "::error::Only pull requests from 'dev' may target 'main'."
+            exit 1
+          fi
+
+          if [ "${BASE_BRANCH}" = "dev" ] && [ "${HEAD_BRANCH}" = "main" ]; then
+            echo "::error::Pull requests from 'main' to 'dev' are not allowed."
+            exit 1
+          fi
+
+          if [ "${BASE_BRANCH}" != "main" ] && [ "${BASE_BRANCH}" != "dev" ]; then
+            echo "::error::Pull requests must target either 'dev' or 'main'."
+            exit 1
+          fi
+
+          echo "Branch policy passed."
