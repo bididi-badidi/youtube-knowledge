@@ -19,5 +19,3 @@ No upcoming tasks
 ## Phases
 
 - [x] Project description and tech stack documented: [README](../../README.md)
-- [x] GitHub CI and PR branch policy workflows added:
-  [.github/workflows](../../.github/workflows)

@@ -4,5 +4,3 @@
 
 - [x] Added the YouTube RAG Knowledge Base tech stack and architecture summary to
   the project README.
-- [x] Added GitHub Actions workflows for lint/test on commits and PR branch
-  policy validation.
