@@ -2,11 +2,16 @@
 
 ## Current Task
 
-No current tasks
+- [ ] Implement planned runtime surfaces from the README:
+  WebSub/FastAPI webhook ingestion, APScheduler fallback polling, Docker
+  packaging, and a RAG query interface.
 
 ## Upcoming
 
-No upcoming tasks
+- [ ] Improve chunk timestamp attribution so source URLs are based on segment
+  boundaries rather than substring matching.
+- [ ] Add stale chunk handling for re-ingestion, using `chunk_version` metadata
+  as part of the cleanup/query strategy.
 
 ## Project Documents
 
@@ -20,4 +25,6 @@ No upcoming tasks
 
 - [x] Project description and tech stack documented: [README](../../README.md)
 - [x] UV-managed ingestion environment and pipeline scaffold complete:
+  [README](../../README.md)
+- [ ] Runtime ingestion automation and query surfaces:
   [README](../../README.md)

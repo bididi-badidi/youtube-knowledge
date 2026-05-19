@@ -21,7 +21,11 @@ class YouTubeIngestionPipeline:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.fetcher = TranscriptFetcher()
-        self.chunker = TranscriptChunker(settings.chunk_size, settings.chunk_overlap)
+        self.chunker = TranscriptChunker(
+            settings.chunk_size,
+            settings.chunk_overlap,
+            settings.chunk_version,
+        )
         self.summarizer = TranscriptSummarizer(settings)
         self.vector_store = ChromaVectorStore(
             str(settings.chroma_path),

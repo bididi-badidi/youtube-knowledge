@@ -26,4 +26,5 @@ def test_chunker_adds_video_metadata_and_stable_ids() -> None:
     assert chunks[0].metadata["genre"] == "tech"
     assert chunks[0].metadata["video_id"] == "abc123"
     assert chunks[0].metadata["chunk_index"] == 0
+    assert chunks[0].metadata["chunk_version"] == "v1"
     assert chunks[0].metadata["source_url"].startswith("https://youtube.com/watch")

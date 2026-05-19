@@ -6,28 +6,28 @@ class TranscriptSummarizer:
         self.settings = settings
 
     def summarize(self, title: str, transcript_text: str, max_chars: int = 900) -> str:
-        if self.settings.openai_api_key:
-            return self._summarize_with_openai(title, transcript_text, max_chars)
+        if self.settings.gemini_api_key:
+            return self._summarize_with_gemini(title, transcript_text, max_chars)
         return self._extractive_summary(title, transcript_text, max_chars)
 
-    def _summarize_with_openai(
+    def _summarize_with_gemini(
         self,
         title: str,
         transcript_text: str,
         max_chars: int,
     ) -> str:
-        from openai import OpenAI
+        from google import genai
 
-        client = OpenAI(api_key=self.settings.openai_api_key)
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=(
+        client = genai.Client(api_key=self.settings.gemini_api_key)
+        response = client.models.generate_content(
+            model=self.settings.gemini_model,
+            contents=(
                 "Summarize this YouTube transcript for a Telegram group. "
                 "Keep it concise, concrete, and useful.\n\n"
                 f"Title: {title}\n\nTranscript:\n{transcript_text[:12000]}"
             ),
         )
-        return response.output_text[:max_chars]
+        return response.text[:max_chars]
 
     def _extractive_summary(
         self, title: str, transcript_text: str, max_chars: int

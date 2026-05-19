@@ -17,7 +17,13 @@ def find_chunk_start_time(
 
 
 class TranscriptChunker:
-    def __init__(self, chunk_size: int = 500, chunk_overlap: int = 50) -> None:
+    def __init__(
+        self,
+        chunk_size: int = 500,
+        chunk_overlap: int = 50,
+        chunk_version: str = "v1",
+    ) -> None:
+        self.chunk_version = chunk_version
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
@@ -44,6 +50,7 @@ class TranscriptChunker:
                 "video_title": video.video_title,
                 "published_at": video.published_at,
                 "chunk_index": index,
+                "chunk_version": self.chunk_version,
                 "timestamp_start": timestamp_start,
                 "source_url": source_url,
             }
